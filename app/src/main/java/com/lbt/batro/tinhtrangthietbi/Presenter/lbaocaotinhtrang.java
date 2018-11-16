@@ -48,7 +48,7 @@ public class lbaocaotinhtrang {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     boolean comay = false;
                     for (DataSnapshot i : dataSnapshot.getChildren()) {
-                        if(i.getValue().equals(mamay))
+                        if(i.child("mamay").getValue().equals(mamay))
                             comay =  true;
                     }
                     if(comay)
@@ -74,18 +74,23 @@ public class lbaocaotinhtrang {
         try{
             //KIEM TRA MA MAY
             final String maphong = mamay.substring(0,4);
-            DatabaseReference mref = mDatabase.getReference("thietbis").child(maphong).child("maytinhs");
+            DatabaseReference mref = mDatabase.getReference("thietbis")
+                    .child(maphong)
+                    .child("maytinhs");
             mref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     boolean mamaydung = false;
                     for (DataSnapshot i : dataSnapshot.getChildren()) {
-                        if(mamay.matches(i.getValue().toString())) {
+                        if(mamay.matches(i.child("mamay").getValue().toString())) {
                            mamaydung = true;
                            //THEM VÀO LỊCH SỬ CHỈNH SỬA
 
                             //ĐẾM SỐ LẦN CHỈNH SỬA
-                            final DatabaseReference reflichsu = mDatabase.getReference("lichsusuachuas").child(maphong).child("maytinhs").child(mamay);
+                            final DatabaseReference reflichsu = mDatabase.getReference("lichsusuachuas")
+                                    .child(maphong)
+                                    .child("maytinhs")
+                                    .child(mamay);
                             reflichsu.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -158,7 +163,10 @@ public class lbaocaotinhtrang {
     public void kiemtratinhtrangmay(final String mamay){
         try{
             final String maphong = mamay.substring(0,4);
-            DatabaseReference mref = mDatabase.getReference("lichsusuachuas").child(maphong).child("maytinhs").child(mamay);
+            DatabaseReference mref = mDatabase.getReference("lichsusuachuas")
+                    .child(maphong)
+                    .child("maytinhs")
+                    .child(mamay);
             mref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

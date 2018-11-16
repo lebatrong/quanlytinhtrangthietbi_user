@@ -7,6 +7,8 @@ android {
         minSdkVersion 16
         targetSdkVersion 27
         multiDexEnabled true
+        renderscriptTargetApi 19
+        renderscriptSupportModeEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -40,5 +42,8 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'me.dm7.barcodescanner:zxing:1.9'
     implementation 'com.android.support:multidex:1.0.3'
+
+    //Dialog Custom
+    implementation 'com.kongzue.dialog:dialog:2.3.4'
 }
 apply plugin: 'com.google.gms.google-services'

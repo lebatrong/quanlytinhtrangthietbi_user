@@ -1,28 +1,31 @@
 package com.lbt.batro.tinhtrangthietbi.models.clsApp;
 
 import com.lbt.batro.tinhtrangthietbi.models.clsFireBase.objlichsu_maytinhs;
+import com.lbt.batro.tinhtrangthietbi.models.clsFireBase.objmaytinhs;
 
 import java.io.Serializable;
 
 public class objthietbimaytinh_app implements Serializable {
 
-    String mathietbi;
+    objmaytinhs thietbi;
     objlichsu_maytinhs lichsusuachua;
 
-    public objthietbimaytinh_app(String mathietbi, objlichsu_maytinhs lichsusuachua) {
-        this.mathietbi = mathietbi;
-        this.lichsusuachua = lichsusuachua;
-    }
+
 
     public objthietbimaytinh_app() {
     }
 
-    public String getMathietbi() {
-        return mathietbi;
+    public objthietbimaytinh_app(objmaytinhs thietbi, objlichsu_maytinhs lichsusuachua) {
+        this.thietbi = thietbi;
+        this.lichsusuachua = lichsusuachua;
     }
 
-    public void setMathietbi(String mathietbi) {
-        this.mathietbi = mathietbi;
+    public objmaytinhs getThietbi() {
+        return thietbi;
+    }
+
+    public void setThietbi(objmaytinhs thietbi) {
+        this.thietbi = thietbi;
     }
 
     public objlichsu_maytinhs getLichsusuachua() {

@@ -35,6 +35,12 @@ public class DanhSachMayTinhActivity extends AppCompatActivity implements ichiti
         setContentView(R.layout.activity_danh_sach_may_tinh);
 
         initView();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         mphongmay.getDanhSachMay(mObjPhong.getMaphong());
     }
 
@@ -72,21 +78,21 @@ public class DanhSachMayTinhActivity extends AppCompatActivity implements ichiti
                 if( mList.get(pos).getLichsusuachua()!=null){
                     if(!mList.get(pos).getLichsusuachua().isDasuachua()) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("mamay", mList.get(pos).getMathietbi());
+                        bundle.putString("mamay", mList.get(pos).getThietbi().getMamay());
                         bundle.putSerializable("mls", mList.get(pos).getLichsusuachua());
                         Intent intent = new Intent(DanhSachMayTinhActivity.this, tinhtrangthietbi.class);
                         intent.putExtra("data", bundle);
                         startActivity(intent);
                     }else{
                         Bundle bundle = new Bundle();
-                        bundle.putString("qrcode", mList.get(pos).getMathietbi());
+                        bundle.putString("qrcode", mList.get(pos).getThietbi().getMamay());
                         Intent intent = new Intent(DanhSachMayTinhActivity.this, baocaotinhtrangActivity.class);
                         intent.putExtra("data", bundle);
                         startActivity(intent);
                     }
                 }else{
                     Bundle bundle = new Bundle();
-                    bundle.putString("qrcode", mList.get(pos).getMathietbi());
+                    bundle.putString("qrcode", mList.get(pos).getThietbi().getMamay());
                     Intent intent = new Intent(DanhSachMayTinhActivity.this, baocaotinhtrangActivity.class);
                     intent.putExtra("data", bundle);
                     startActivity(intent);

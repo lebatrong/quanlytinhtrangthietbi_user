@@ -1,5 +1,6 @@
 package com.lbt.batro.tinhtrangthietbi.models.clsApp;
 
+import com.lbt.batro.tinhtrangthietbi.models.clsFireBase.objmaytinhs;
 import com.lbt.batro.tinhtrangthietbi.models.clsFireBase.objthietbikhacs;
 
 import java.util.List;
@@ -7,10 +8,10 @@ import java.util.List;
 public class objthietbiphongmay_app {
 
     String maphong;
-    List<String> maytinh;
+    List<objmaytinhs> maytinh;
     objthietbikhacs thietbikhacs;
 
-    public objthietbiphongmay_app(String maphong, List<String> maytinh, objthietbikhacs thietbikhacs) {
+    public objthietbiphongmay_app(String maphong, List<objmaytinhs> maytinh, objthietbikhacs thietbikhacs) {
         this.maphong = maphong;
         this.maytinh = maytinh;
         this.thietbikhacs = thietbikhacs;
@@ -27,11 +28,11 @@ public class objthietbiphongmay_app {
         this.maphong = maphong;
     }
 
-    public List<String> getMaytinh() {
+    public List<objmaytinhs> getMaytinh() {
         return maytinh;
     }
 
-    public void setMaytinh(List<String> maytinh) {
+    public void setMaytinh(List<objmaytinhs> maytinh) {
         this.maytinh = maytinh;
     }
 
