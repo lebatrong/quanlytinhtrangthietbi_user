@@ -1,5 +1,6 @@
 package com.lbt.batro.tinhtrangthietbi;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -12,6 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.kongzue.dialog.v2.DialogSettings;
+import com.kongzue.dialog.v2.SelectDialog;
 import com.lbt.batro.tinhtrangthietbi.Presenter.idangnhap;
 import com.lbt.batro.tinhtrangthietbi.Presenter.itaikhoan;
 import com.lbt.batro.tinhtrangthietbi.Presenter.ldangnhap;
@@ -46,6 +49,12 @@ public class MainActivity extends AppCompatActivity implements idangnhap, itaikh
         actionTaiKhoan();
         actionPhong();
         actionSetting();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DialogSettings.unloadAllDialog();
     }
 
     private void actionPhong() {
@@ -90,7 +99,21 @@ public class MainActivity extends AppCompatActivity implements idangnhap, itaikh
         btnDangXuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mdangnhap.dangxuat();
+                SelectDialog.show(MainActivity.this,
+                        getText(R.string.dangxuat) + "?",
+                        null, getText(R.string.xacnhan).toString(),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mdangnhap.dangxuat();
+                                dialog.dismiss();
+                            }
+                        }, getText(R.string.huy).toString(), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
             }
         });
     }
@@ -107,6 +130,11 @@ public class MainActivity extends AppCompatActivity implements idangnhap, itaikh
         tvHoTen = findViewById(R.id.tvHoTenMain);
         anhnen = findViewById(R.id.imvhinhnenMain);
         btnDangXuat = findViewById(R.id.btnDangXuat);
+
+        //SetTing Dialog;
+        DialogSettings.use_blur = true;
+        DialogSettings.blur_alpha = 200;
+        DialogSettings.type = DialogSettings.TYPE_IOS;
     }
 
     @Override

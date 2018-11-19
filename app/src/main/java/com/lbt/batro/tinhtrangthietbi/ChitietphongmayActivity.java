@@ -47,7 +47,7 @@ public class ChitietphongmayActivity extends AppCompatActivity implements ichiti
     TextView tvtongmanhinh,tvbtmanhinh,tvhumanhinh;
     TextView tvtongcpu,tvbtcpu,tvhucpu;
 
-    TextView tvTitleMayTinh, tvTitleTBKhac;
+
 
     objthietbikhacs mThietbi_default,mThietBi_Hu;
 
@@ -71,7 +71,6 @@ public class ChitietphongmayActivity extends AppCompatActivity implements ichiti
         initView();
 
         actionBaoCaoKhac();
-        actionViGoneTitle();
         actionChiTietMayTinh();
 
 
@@ -90,29 +89,6 @@ public class ChitietphongmayActivity extends AppCompatActivity implements ichiti
         });
     }
 
-    private void actionViGoneTitle() {
-        tvTitleTBKhac.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isvisible_tbk = !isvisible_tbk;
-                if(isvisible_tbk)
-                    lnltbk.setVisibility(View.VISIBLE);
-                else
-                    lnltbk.setVisibility(View.GONE);
-            }
-        });
-
-        tvTitleMayTinh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isvisible_mt = !isvisible_mt;
-                if(isvisible_mt)
-                    lnlmaytinh.setVisibility(View.VISIBLE);
-                else
-                    lnlmaytinh.setVisibility(View.GONE);
-            }
-        });
-    }
 
     private void actionBaoCaoKhac() {
         btnbaocaothietbikhac.setOnClickListener(new View.OnClickListener() {
@@ -219,8 +195,6 @@ public class ChitietphongmayActivity extends AppCompatActivity implements ichiti
         tvbtchuot = findViewById(R.id.tvbinhthuongchuot_ctp);
 
 
-        tvTitleMayTinh = findViewById(R.id.tvtitlemaytinh_ctp);
-        tvTitleTBKhac = findViewById(R.id.tvtitlethietbikhac_ctp);
 
         //SETUP PROGRESS BAR
         lnlpro.setVisibility(View.VISIBLE);

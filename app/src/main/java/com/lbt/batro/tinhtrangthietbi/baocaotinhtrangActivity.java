@@ -12,6 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.kongzue.dialog.v2.WaitDialog;
 import com.lbt.batro.tinhtrangthietbi.Presenter.ibaocaotinhtrang;
 import com.lbt.batro.tinhtrangthietbi.Presenter.lbaocaotinhtrang;
 import com.lbt.batro.tinhtrangthietbi.models.clsFireBase.objchitietthietbimaytinh;
@@ -24,7 +25,7 @@ public class baocaotinhtrangActivity extends AppCompatActivity implements ibaoca
     private EditText edtKhac,edtphanmem;
     private Button btnGui;
     private lbaocaotinhtrang mBaoCao;
-    private ProgressDialog mPro;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,27 +40,37 @@ public class baocaotinhtrangActivity extends AppCompatActivity implements ibaoca
         btnGui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String mamay = toolbar.getTitle().toString();
-                objchitietthietbimaytinh mtb = new objchitietthietbimaytinh();
-                mtb.setBanphim(cbbanphim.isChecked());
-                mtb.setChuot(cbchuot.isChecked());
-                mtb.setCpu(cbcpu.isChecked());
-                mtb.setManhinh(cbmanhinh.isChecked());
-                mtb.setHedieuhanh(cbbhedieuhanh.isChecked());
-                String khac = edtKhac.getText().toString();
-                String phanmem = edtphanmem.getText().toString();
-                if(TextUtils.isEmpty(khac))
-                    mtb.setKhac("");
-                else
-                    mtb.setKhac(khac);
+                if(!cbbanphim.isChecked()
+                        || !cbchuot.isChecked()
+                        || !cbcpu.isChecked()
+                        || !cbmanhinh.isChecked()
+                        || !cbbhedieuhanh.isChecked()
+                        || !edtKhac.getText().toString().matches("")
+                        || !edtphanmem.getText().toString().matches("") ) {
+                    String mamay = toolbar.getTitle().toString();
+                    objchitietthietbimaytinh mtb = new objchitietthietbimaytinh();
+                    mtb.setBanphim(cbbanphim.isChecked());
+                    mtb.setChuot(cbchuot.isChecked());
+                    mtb.setCpu(cbcpu.isChecked());
+                    mtb.setManhinh(cbmanhinh.isChecked());
+                    mtb.setHedieuhanh(cbbhedieuhanh.isChecked());
+                    String khac = edtKhac.getText().toString();
+                    String phanmem = edtphanmem.getText().toString();
+                    if (TextUtils.isEmpty(khac))
+                        mtb.setKhac("");
+                    else
+                        mtb.setKhac(khac);
 
-                if(TextUtils.isEmpty(phanmem))
-                    mtb.setPhanmem("");
-                else
-                    mtb.setPhanmem(phanmem);
+                    if (TextUtils.isEmpty(phanmem))
+                        mtb.setPhanmem("");
+                    else
+                        mtb.setPhanmem(phanmem);
 
-                showPro("Gửi báo cáo", "Đang gửi báo cáo vui lòng đợi...");
-                mBaoCao.capnhatlichsusuachua(mamay,mtb);
+                    WaitDialog.show(baocaotinhtrangActivity.this, getText(R.string.dangtai).toString());
+                    mBaoCao.capnhatlichsusuachua(mamay, mtb);
+                }else {
+                    Toast.makeText(baocaotinhtrangActivity.this, getText(R.string.vuilongchontinhtrang), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -133,7 +144,7 @@ public class baocaotinhtrangActivity extends AppCompatActivity implements ibaoca
 
     private void initView() {
         mBaoCao = new lbaocaotinhtrang(this);
-        mPro = new ProgressDialog(this);
+
         toolbar = findViewById(R.id.toolbarTinhTrangTB);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -168,12 +179,6 @@ public class baocaotinhtrangActivity extends AppCompatActivity implements ibaoca
 
     }
 
-    private void showPro(String title,String content){
-        mPro.setCancelable(false);
-        mPro.setTitle(title);
-        mPro.setMessage(content);
-        mPro.show();
-    }
 
 
     @Override
@@ -183,7 +188,7 @@ public class baocaotinhtrangActivity extends AppCompatActivity implements ibaoca
 
     @Override
     public void capnhatthanhcong(boolean isthanhcong) {
-        mPro.dismiss();
+        WaitDialog.dismiss();
         Toast.makeText(this, getText(R.string.guibaocaothanhcong), Toast.LENGTH_SHORT).show();
         onBackPressed();
         finish();

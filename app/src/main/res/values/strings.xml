@@ -55,6 +55,7 @@
     <string name="tenphanmem">Tên phần mềm</string>
     <string name="dongy">Đồng ý</string>
     <string name="huy">Hủy</string>
+    <string name="thongbao">Thông báo</string>
     <string name="maydangsuachuamuonxemtinhtrang">"Máy đang trong quá trình sửa chữa, bạn muốn xem chi tiết tình trạng?"</string>
     <string name="phanmem">Phần mềm</string>
     <string name="bophankhac">Bộ phận khác</string>
@@ -98,4 +99,10 @@
     <string name="maqrkhonghople">Mã QR không hợp lệ</string>
     <string name="guibaocaothanhcong">Gửi báo cáo thành công, Cảm ơn bạn!</string>
     <string name="guibaocaokhongthanhcong">Gửi báo cáo không thành công!</string>
+    <string name="dangdangnhap">Đang đăng nhập, vui lòng chờ...</string>
+    <string name="dangtai">Đang tải</string>
+    <string name="dangcapnhatthongtin">Đang cập nhật thông tin...</string>
+    <string name="nhaptenphanmem">Nhập tên phần mềm</string>
+    <string name="vuilongchontinhtrang">Vui lòng chọn tình trạng!</string>
+
 </resources>

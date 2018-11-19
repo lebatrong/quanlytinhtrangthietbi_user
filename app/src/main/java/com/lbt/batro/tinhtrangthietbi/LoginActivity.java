@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.kongzue.dialog.v2.WaitDialog;
 import com.lbt.batro.tinhtrangthietbi.Presenter.idangnhap;
 import com.lbt.batro.tinhtrangthietbi.Presenter.ldangnhap;
 
@@ -17,7 +18,6 @@ public class LoginActivity extends AppCompatActivity implements idangnhap {
 
     Button btnLogin;
     TextInputLayout tiluser,tilpwd;
-    ProgressDialog mProgress;
     ldangnhap mDangNhap;
 
     @Override
@@ -34,22 +34,17 @@ public class LoginActivity extends AppCompatActivity implements idangnhap {
         btnLogin = findViewById(R.id.btnDangNhap);
         tiluser = findViewById(R.id.tilTenDangNhap);
         tilpwd = findViewById(R.id.tilMatKhau);
-        mProgress = new ProgressDialog(this);
         mDangNhap = new ldangnhap(this,this);
     }
 
-    private void showProgress(String title, String content){
-            mProgress.setMessage(content);
-            mProgress.setTitle(title);
-            mProgress.setCancelable(false);
-            mProgress.show();
-    }
+
 
     private void actionDangNhap(){
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showProgress("Đăng nhập","Đang đăng nhập, vui lòng chờ...");
+                WaitDialog.show(LoginActivity.this, getText(R.string.dangdangnhap).toString());
+
                 String userName = tiluser.getEditText().getText().toString();
                 String pwd = tilpwd.getEditText().getText().toString();
                 tilpwd.setErrorEnabled(false);
@@ -72,20 +67,20 @@ public class LoginActivity extends AppCompatActivity implements idangnhap {
 
     @Override
     public void dangnhapthatbai() {
-        mProgress.dismiss();
+        WaitDialog.dismiss();
         Toast.makeText(this, getString(R.string.dangnhapthatbai), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void saitendangnhap() {
-        mProgress.dismiss();
+        WaitDialog.dismiss();
         tiluser.setErrorEnabled(true);
         tiluser.setError(getString(R.string.tendangnhapkhonghople));
     }
 
     @Override
     public void saimatkhau() {
-        mProgress.dismiss();
+        WaitDialog.dismiss();
         tilpwd.setErrorEnabled(true);
         tilpwd.setError(getString(R.string.matkhaukhonghople));
     }
@@ -97,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements idangnhap {
 
     @Override
     public void luuthongtinnguoidungthanhcong(boolean iscoluu) {
-        mProgress.dismiss();
+        WaitDialog.dismiss();
         startActivity(new Intent(LoginActivity.this,MainActivity.class));
         finish();
     }

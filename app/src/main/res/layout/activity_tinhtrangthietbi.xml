@@ -154,6 +154,13 @@
 
             </RelativeLayout>
 
+            <View
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorLine"/>
+
             <RelativeLayout
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
@@ -186,6 +193,13 @@
                     android:layout_height="wrap_content" />
 
             </RelativeLayout>
+
+            <View
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorLine"/>
 
             <RelativeLayout
                 android:layout_marginTop="10dp"
@@ -220,6 +234,13 @@
 
             </RelativeLayout>
 
+            <View
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorLine"/>
+
             <RelativeLayout
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
@@ -252,6 +273,13 @@
                     android:layout_height="wrap_content" />
 
             </RelativeLayout>
+
+            <View
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorLine"/>
 
             <RelativeLayout
                 android:layout_marginTop="10dp"
@@ -286,6 +314,13 @@
 
             </RelativeLayout>
 
+            <View
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorLine"/>
+
             <TextView
                 android:paddingTop="5dp"
                 android:layout_marginTop="5dp"
@@ -296,10 +331,23 @@
                 android:layout_height="wrap_content" />
 
             <EditText
+                android:paddingLeft="10dp"
+                android:textSize="17dp"
+                android:enabled="false"
+                android:paddingBottom="7dp"
+                android:paddingTop="7dp"
+                android:background="@color/transparent"
                 android:id="@+id/edtphanmemdialog"
                 android:inputType="textMultiLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <View
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorLine"/>
 
             <TextView
                 android:layout_marginTop="5dp"
@@ -310,6 +358,12 @@
                 android:layout_height="wrap_content" />
 
             <EditText
+                android:paddingLeft="10dp"
+                android:textSize="17dp"
+                android:enabled="false"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:background="@color/transparent"
                 android:id="@+id/edtkhacdialog"
                 android:inputType="textMultiLine"
                 android:layout_width="match_parent"

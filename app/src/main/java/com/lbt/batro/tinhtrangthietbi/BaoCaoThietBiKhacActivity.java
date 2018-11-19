@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.kongzue.dialog.v2.WaitDialog;
 import com.lbt.batro.tinhtrangthietbi.Presenter.ibaocaotinhtrang;
 import com.lbt.batro.tinhtrangthietbi.Presenter.lbaocaotinhtrang;
 import com.lbt.batro.tinhtrangthietbi.models.clsFireBase.objlichsu_maytinhs;
@@ -27,7 +28,6 @@ public class BaoCaoThietBiKhacActivity extends AppCompatActivity implements ibao
 
     lbaocaotinhtrang mbaocao;
 
-    boolean isBaoCao;
 
     EditText edtban,edtghe,edtquat,edtden,edttivi,edtswitch,edtmodem,edtmaydieuhoa,edtkhac;
     TextView tvban, tvhuban,
@@ -50,18 +50,13 @@ public class BaoCaoThietBiKhacActivity extends AppCompatActivity implements ibao
         actionbaocao();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        isBaoCao = false;
-    }
 
     private void actionbaocao() {
         btnGuiBaoCao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try{
-
+                    btnGuiBaoCao.setEnabled(false);
                     objthietbikhacs capnhat = new objthietbikhacs();
                     capnhat.setKhac(edtkhac.getText().toString());
 
@@ -125,10 +120,9 @@ public class BaoCaoThietBiKhacActivity extends AppCompatActivity implements ibao
                     capnhat.setModemwifi(modem);
                     capnhat.setTivi(tivi);
                     capnhat.setBan(ban);
-                    if(!isBaoCao) {
-                        isBaoCao = true;
-                        mbaocao.capnhattinhtrangthietbikhac(mThietbi_default, mThietBi_Hu, capnhat, maphong);
-                    }
+                    WaitDialog.show(BaoCaoThietBiKhacActivity.this, getText(R.string.dangtai).toString());
+                    mbaocao.capnhattinhtrangthietbikhac(mThietbi_default, mThietBi_Hu, capnhat, maphong);
+
 
 
                 }catch (Exception e){
@@ -210,15 +204,14 @@ public class BaoCaoThietBiKhacActivity extends AppCompatActivity implements ibao
         btnGuiBaoCao = findViewById(R.id.btnGuiBaoCao_cb);
 
         toolbar = findViewById(R.id.toolbarbaocaotbk);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -234,11 +227,14 @@ public class BaoCaoThietBiKhacActivity extends AppCompatActivity implements ibao
 
     @Override
     public void giatrikhonghople() {
+        btnGuiBaoCao.setEnabled(true);
+        WaitDialog.dismiss();
         Toast.makeText(this, getText(R.string.giatrikhonghople), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void baocaothietbikhacthanhcong(boolean isCapNhat) {
+        WaitDialog.dismiss();
         if(isCapNhat)
             Toast.makeText(this, getText(R.string.capnhatthanhcong), Toast.LENGTH_SHORT).show();
         else

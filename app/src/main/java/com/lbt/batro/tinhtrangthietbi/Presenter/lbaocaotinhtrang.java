@@ -213,7 +213,11 @@ public class lbaocaotinhtrang {
                 thietbihu.getQuat()+thietbihumoi.getQuat() <= default_values.getQuat() &&
                 thietbihu.getTivi()+thietbihumoi.getTivi() <= default_values.getTivi()){
 
-            DatabaseReference mRef = mDatabase.getReference().child("lichsusuachuas").child(maphong).child("thietbikhacs");
+            DatabaseReference mRef = mDatabase.getReference()
+                    .child("lichsusuachuas")
+                    .child(maphong)
+                    .child("thietbikhacs");
+
             mRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -256,8 +260,6 @@ public class lbaocaotinhtrang {
                             update.setEmailnguoibaocao(thietbikhac.getEmailnguoibaocao());
                             update.setNgaybaocao(thietbikhac.getNgaybaocao());
 
-
-                            Log.e("kiemtra", new Gson().toJson(update));
 
                             capnhat_thietbikhac(update, mlistTBK.size() - 1, maphong);
 

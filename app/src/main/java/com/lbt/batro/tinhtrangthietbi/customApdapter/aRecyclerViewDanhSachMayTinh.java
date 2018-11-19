@@ -50,7 +50,7 @@ public class aRecyclerViewDanhSachMayTinh extends RecyclerView.Adapter<aRecycler
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tvMaThietBi.setText(mList.get(position).getThietbi().getMamay());
+        holder.tvMaThietBi.setText( mList.get(position).getThietbi().getTenmay()+" "+"( "+mList.get(position).getThietbi().getMamay()+" )");
         //MÁY BÌNH THƯỜNG
         if(mList.get(position).getLichsusuachua() == null || (mList.get(position).getLichsusuachua().isDasuachua() && mList.get(position).getLichsusuachua() != null)){
             holder.lnlNgungHoadDong.setVisibility(View.GONE);

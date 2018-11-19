@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kongzue.dialog.v2.WaitDialog;
 import com.lbt.batro.tinhtrangthietbi.Presenter.itaikhoan;
 import com.lbt.batro.tinhtrangthietbi.Presenter.ltaikhoan;
 import com.lbt.batro.tinhtrangthietbi.models.clsFireBase.objnguoidungs;
@@ -45,7 +46,7 @@ public class taikhoanActivity extends AppCompatActivity implements itaikhoan {
     private int REQUEST_CODE_IMAGE = 1;
     private boolean isTaiHinh;
     ltaikhoan mTaiKhoan;
-    private ProgressDialog mProgress;
+
 
 
     @Override
@@ -88,7 +89,7 @@ public class taikhoanActivity extends AppCompatActivity implements itaikhoan {
         btnCapNhatThongTin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showProgress("Đang cập nhật thông tin...");
+                WaitDialog.show(taikhoanActivity.this,getText(R.string.dangcapnhatthongtin).toString());
                 objnguoidungs mNguoiDung = mTaiKhoan.getDataUser();
                 try {
                     String ht = tilHoTen.getEditText().getText().toString();
@@ -133,7 +134,6 @@ public class taikhoanActivity extends AppCompatActivity implements itaikhoan {
         this.rdoNu = findViewById(R.id.rdonu);
         this.crlhinhnen = findViewById(R.id.crlhinhnen);
 
-        mProgress = new ProgressDialog(this);
 
         mTaiKhoan = new ltaikhoan(this,this);
 
@@ -170,15 +170,11 @@ public class taikhoanActivity extends AppCompatActivity implements itaikhoan {
             rdoNu.setChecked(true);
     }
 
-    private void showProgress(String content){
-        mProgress.setMessage(content);
-        mProgress.setCancelable(false);
-        mProgress.show();
-    }
+
 
     @Override
     public void capnhatthongtin(boolean isSuccess) {
-        mProgress.dismiss();
+        WaitDialog.dismiss();
         if(isSuccess)
             Toast.makeText(this, getText(R.string.capnhatthongtinthanhcong), Toast.LENGTH_SHORT).show();
         else

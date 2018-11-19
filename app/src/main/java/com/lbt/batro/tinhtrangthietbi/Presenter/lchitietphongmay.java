@@ -42,14 +42,21 @@ public class lchitietphongmay {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 //                ================PHÂN TÁCH DATA============
-                //PHÂN TÁCH DANH SÁCH MÁY
-                GenericTypeIndicator<List<objmaytinhs>> gen = new GenericTypeIndicator<List<objmaytinhs>>(){};
-                List<objmaytinhs> mListMayTinh = dataSnapshot.child("maytinhs").getValue(gen);
-                //PHÂN TÁCH THIETBIKHACS
-                objthietbikhacs mthietbikhac = dataSnapshot.child("thietbikhacs").getValue(objthietbikhacs.class);
 
-//                THỐNG KÊ
-                thongkechitietphong(new objthietbiphongmay_app(dataSnapshot.getKey(),mListMayTinh,mthietbikhac));
+                if(dataSnapshot.child("maytinhs").getValue()!=null
+                        && dataSnapshot.child("thietbikhacs").getValue()!=null) {
+                    //PHÂN TÁCH DANH SÁCH MÁY
+                    GenericTypeIndicator<List<objmaytinhs>> gen = new GenericTypeIndicator<List<objmaytinhs>>() {};
+                    List<objmaytinhs> mListMayTinh = dataSnapshot.child("maytinhs").getValue(gen);
+
+                    //PHÂN TÁCH THIETBIKHACS
+                    objthietbikhacs mthietbikhac = dataSnapshot.child("thietbikhacs").getValue(objthietbikhacs.class);
+
+                    //                THỐNG KÊ
+                    thongkechitietphong(new objthietbiphongmay_app(dataSnapshot.getKey(),mListMayTinh,mthietbikhac));
+                }else {
+                    mChiTiet.phongmaydangxaydung();
+                }
 
             }
 
@@ -169,6 +176,7 @@ public class lchitietphongmay {
 
 
         }else{//KHÔNG CÓ GIÁ TRỊ (máy tính tốt)
+            Log.e("kiemtra", new Gson().toJson(thietbi_default));
             long tongmay = thietbi_default.getMaytinh().size();
             objthongkemaytinh_app thongke = new objthongkemaytinh_app();
             thongke.setMaytinh(tongmay);

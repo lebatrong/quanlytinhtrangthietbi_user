@@ -14,6 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
+import com.kongzue.dialog.v2.DialogSettings;
+import com.kongzue.dialog.v2.SelectDialog;
+import com.kongzue.dialog.v2.WaitDialog;
 import com.lbt.batro.tinhtrangthietbi.Presenter.ibaocaotinhtrang;
 import com.lbt.batro.tinhtrangthietbi.Presenter.lbaocaotinhtrang;
 import com.lbt.batro.tinhtrangthietbi.models.clsFireBase.objlichsu_maytinhs;
@@ -25,7 +28,7 @@ public class ScannerQRCode extends AppCompatActivity implements ZXingScannerView
     private ZXingScannerView mScannerView;
     private lbaocaotinhtrang mTinhTrang;
     private String mQRcode;
-    private ProgressDialog mPro;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +37,21 @@ public class ScannerQRCode extends AppCompatActivity implements ZXingScannerView
 
         mTinhTrang = new lbaocaotinhtrang(this);
         mQRcode = "";
-        mPro = new ProgressDialog(this);
+
+
+        //SetTing Dialog;
+        DialogSettings.use_blur = true;
+        DialogSettings.blur_alpha = 200;
+        DialogSettings.type = DialogSettings.TYPE_IOS;
+
         ActivityCompat.requestPermissions(ScannerQRCode.this,new String[] {Manifest.permission.CAMERA},1);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DialogSettings.unloadAllDialog();
     }
 
     @Override
@@ -54,7 +69,7 @@ public class ScannerQRCode extends AppCompatActivity implements ZXingScannerView
     public void handleResult(Result rawResult) {
         mQRcode = rawResult.getText();
         mTinhTrang.kiemtratinhtrangmay(rawResult.getText());
-        showPro("Đang xử lý","Đang lấy thông tin, vui lòng đợi...");
+        WaitDialog.show(ScannerQRCode.this, getText(R.string.dangtai).toString());
 
         //PHÁT ÂM BÁO KHI QUÉT THÀNH CÔNG
         MediaPlayer mediaPlayer = MediaPlayer.create(this,R.raw.beep);
@@ -62,17 +77,11 @@ public class ScannerQRCode extends AppCompatActivity implements ZXingScannerView
 
     }
 
-    private void showPro(String title,String content){
-        mPro.setCancelable(false);
-        mPro.setTitle(title);
-        mPro.setMessage(content);
-        mPro.show();
-    }
 
     @Override
     public void laythongtinmay(boolean isSuccess) {
+        WaitDialog.dismiss();
         if(isSuccess){
-            mPro.dismiss();
             Intent intent = new Intent(this,baocaotinhtrangActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("qrcode",mQRcode);
@@ -80,7 +89,6 @@ public class ScannerQRCode extends AppCompatActivity implements ZXingScannerView
             startActivity(intent);
             finish();
         }else{
-            mPro.dismiss();
             Toast.makeText(this, getText(R.string.loi), Toast.LENGTH_SHORT).show();
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -114,7 +122,7 @@ public class ScannerQRCode extends AppCompatActivity implements ZXingScannerView
         if(isTot){
             mTinhTrang.laythongtinthietbi(mamay);
         }else{
-            mPro.dismiss();
+            WaitDialog.dismiss();
             showaler(mls,mamay);
         }
     }
@@ -125,26 +133,25 @@ public class ScannerQRCode extends AppCompatActivity implements ZXingScannerView
     }
 
     public void showaler(final objlichsu_maytinhs mls, final String mamay){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(false);
-        builder.setMessage(getText(R.string.maydangsuachuamuonxemtinhtrang));
-        builder.setNegativeButton(getText(R.string.huy), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                finish();
-            }
-        });
-        builder.setPositiveButton(getText(R.string.dongy), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
 
-                showtinhtrangthietbi(mls,mamay);
-            }
-        });
+        SelectDialog.show(ScannerQRCode.this,
+                getText(R.string.thongbao).toString(),
+                getText(R.string.maydangsuachuamuonxemtinhtrang).toString(),
+                getText(R.string.dongy).toString(),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        showtinhtrangthietbi(mls,mamay);
+                        dialog.dismiss();
+                    }
+                }, getText(R.string.huy).toString(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        dialog.dismiss();
+                    }
+                });
 
-        Dialog dialog = builder.create();
-        dialog.show();
     }
 
     private void showtinhtrangthietbi(objlichsu_maytinhs mls, String mamay){
